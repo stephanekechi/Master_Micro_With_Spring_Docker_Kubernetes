@@ -1,0 +1,10 @@
+==> Challenge 1 with Microservices (Right Sizing & Identifying Service Boundaries)
+    -> One of the most challenging aspects of building a successful microservices' system is the identification of proper
+        microservice boundaries and defining the size of each microservice
+
+    -> Below are the most common followed approaches in the industry
+        # Domain-Driven Sizing: since many of our modifications or enhancements driven by the business needs, we can size/define boundaries of our
+            microservices that are closely aligned with Domain-Driven & Business capabilities. But this process takes lot of time and need good domain knowledge.
+
+    -> Event Storming Sizing: Conducting an interactive fun session among various stakeholder to identify the list of important events in the system like
+        'Completed Payment', 'Search for a Product' etc. Based on the events we can identify 'Commands', 'Reactions' and can try to group them to a Domain-Driven services.
