@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
+/**
+ * @author Stephane Nganou
+ */
 @Entity
 @Data
 @ToString
