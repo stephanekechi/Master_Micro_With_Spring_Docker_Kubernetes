@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+
+  accounts:
+    image: greatness/accounts:latest
+    mem_limit: 700m
+    ports:
+      - "8083:8083"
+
+  loans:
+    image: greatness/loans:latest
+    mem_limit: 700m
+    ports:
+      - "8081:8081"
+
+  cards:
+    image: greatness/cards:latest
+    mem_limit: 700m
+    ports:
+      - "8082:8082"
+
