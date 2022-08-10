@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface LoansRepository extends JpaRepository<Loans, Long> {
 
-    List<Loans> findByCustomerIdOrderByCreateDateDesc(int customerId);
+    List<Loans> findByCustomerIdOrderByCreateDateDesc(long customerId);
 }

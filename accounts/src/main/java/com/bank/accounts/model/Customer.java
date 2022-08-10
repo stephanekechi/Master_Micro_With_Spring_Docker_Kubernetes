@@ -18,7 +18,7 @@ public class Customer {
 
     @Column(name = "customer_id")
     @Id
-    private int customerId;
+    private long customerId;
 
     @Column
     private String name;

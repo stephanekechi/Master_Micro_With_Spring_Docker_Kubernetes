@@ -1,4 +1,4 @@
-package com.bank.loans.model;
+package com.bank.cards.model;
 
 import lombok.Data;
 import lombok.ToString;
@@ -10,36 +10,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
-/**
- * @author Stephane Nganou
- */
 @Entity
 @Data
 @ToString
-public class Loans {
+public class Cards {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "loan_number")
-    private long loanNumber;
+    @Column(name = "card_id")
+    private long cardId;
 
     @Column(name = "customer_id")
     private long customerId;
 
-    @Column(name = "start_date")
-    private LocalDate startDate;
+    @Column(name = "card_number")
+    private String cardNumber;
 
-    @Column(name = "loan_type")
-    private String loanType;
+    @Column(name = "card_type")
+    private String cardType;
 
-    @Column(name = "total_loan")
-    private int totalLoan;
+    @Column(name = "total_limit")
+    private int totalLimit;
 
-    @Column(name = "amount_paid")
-    private int amountPaid;
+    @Column(name = "amount_used")
+    private int amountUsed;
 
-    @Column(name = "outstanding_amount")
-    private int outstandingAmount;
+    @Column(name = "available_amount")
+    private int availableAmount;
 
     @Column(name = "create_date")
     private LocalDate createDate;

@@ -1,4 +1,5 @@
-package com.bank.loans.model;
+package com.bank.cards.model;
+
 
 import lombok.Data;
 import lombok.ToString;
@@ -32,3 +33,4 @@ public class Customer {
     @Column(name = "create_date")
     private LocalDate createDate;
 }
+
