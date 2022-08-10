@@ -1,4 +1,5 @@
 ==> Challenge 1 with Microservices (Right Sizing & Identifying Service Boundaries)
+
     -> One of the most challenging aspects of building a successful microservices' system is the identification of proper
         microservice boundaries and defining the size of each microservice
 
@@ -8,3 +9,31 @@
 
     -> Event Storming Sizing: Conducting an interactive fun session among various stakeholder to identify the list of important events in the system like
         'Completed Payment', 'Search for a Product' etc. Based on the events we can identify 'Commands', 'Reactions' and can try to group them to a Domain-Driven services.
+
+
+==> Cloud Native Applications
+        Intro
+
+   -> Cloud-native applications are a collection of small, independent, and loosely coupled services. They are designed to deliver well-recognized business value, like the ability to rapidly incorporate
+        user feedback for continuous improvement. Its goal is to deliver apps users want at the pace a business needs.
+
+   -> If an apps is "cloud-native", it's specifically designed to provide a consistent development and automated management experience across private, public, and hybrid clouds.
+        So it's about how applications are created and deployed, not where.
+
+   -> When creating cloud-native applications, the developers divide the functions into microservices, with scalable components such as containers in order to be able to run on several servers. These services
+        are managed by virtual infrastructures through DevOps processes with continuous delivery workflows. It's important to understand that these types of applications do not require any change or conversion to work in the
+        cloud and are designed to deal with the unavailability of downstream components.
+
+ ==> Principles of Cloud-Native Applications
+
+    -> 1. Microservice:
+        A micro-services architecture breaks apps downs into their smallest components, independent from each other.
+
+    -> 2. Containers:
+        Containers allow apps to be packaged and isolated with their entire runtime environment, making iT easy to move them between environments while retaining full functionality.
+
+    -> 3. Devops:
+        Devops is an approach to culture, automation, and platform design intended to deliver increased business value and responsiveness.
+
+    -> 4. Continous Delivery:
+        It's a software development practice in which the process of delivering software is automated to allow short-term deliveries into a production environment.
