@@ -1,4 +1,4 @@
-package com.bank.accounts.model;
+package com.bank.cards.model;
 
 import lombok.Data;
 
@@ -10,6 +10,7 @@ import java.util.Map;
  */
 @Data
 public class Properties {
+
     private String msg;
     private String buildVersion;
     private Map<String, String> mailDetails;
