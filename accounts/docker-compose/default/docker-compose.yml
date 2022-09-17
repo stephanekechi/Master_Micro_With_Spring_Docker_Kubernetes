@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
 
-  config-server:
+  configserver:
     image: greatness/configserver:latest
     mem_limit: 700m
     restart: always
@@ -15,11 +15,11 @@ services:
     expose:
       - 8083
     depends_on:
-      - config-server
+      - configserver
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://config-server:8084/
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
 
   loans:
     image: greatness/loans:latest
@@ -27,7 +27,7 @@ services:
     expose:
       - 8081
     depends_on:
-      - config-server
+      - configserver
     restart: always
     #deploy:
      # restart_policy:
@@ -37,7 +37,7 @@ services:
         #window: 120s
     environment:
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://config-server:8084/
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
 
   cards:
     image: greatness/cards:latest
@@ -45,8 +45,8 @@ services:
     expose:
       - 8082
     depends_on:
-      - config-server
+      - configserver
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://config-server:8084/
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084/
