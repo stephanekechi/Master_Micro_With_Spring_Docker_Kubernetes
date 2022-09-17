@@ -58,6 +58,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Download needed dependencies from Spring Cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -70,6 +71,7 @@
 
     <build>
         <plugins>
+            <!-- Build docker images locally -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

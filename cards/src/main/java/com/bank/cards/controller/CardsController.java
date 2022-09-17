@@ -23,7 +23,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/cards")
 public class CardsController {
-
     private final CardsRepository cardsRepository;
     private final CardsServiceConfig cardsServiceConfig;
 
