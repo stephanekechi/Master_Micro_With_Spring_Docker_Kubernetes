@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+
+  configserver:
+    image: greatness/configserver:latest
+    mem_limit: 700m
+    restart: always
+    networks:
+      - greatness
+    expose:
+      - 8084
+
+  accounts:
+    image: greatness/accounts:latest
+    mem_limit: 700m
+    expose:
+      - 8083
+    depends_on:
+      - configserver
+    #restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - greatness
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+
+  loans:
+    image: greatness/loans:latest
+    mem_limit: 700m
+    expose:
+      - 8081
+    depends_on:
+      - configserver
+    #restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - greatness
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+
+  cards:
+    image: greatness/cards:latest
+    mem_limit: 700m
+    expose:
+      - 8082
+    depends_on:
+      - configserver
+    #restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - greatness
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084/
+
+networks:
+  greatness:
