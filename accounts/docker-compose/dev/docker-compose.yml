@@ -8,14 +8,14 @@ services:
     restart: always
     networks:
       - greatness
-    expose:
-      - 8084
+    ports:
+      - '8084:8084'
 
   accounts:
     image: greatness/accounts:latest
     mem_limit: 700m
-    expose:
-      - 8083
+    ports:
+      - '8083:8083'
     depends_on:
       - configserver
     #restart: always
@@ -34,8 +34,8 @@ services:
   loans:
     image: greatness/loans:latest
     mem_limit: 700m
-    expose:
-      - 8081
+    ports:
+      - '8081:8081'
     depends_on:
       - configserver
     #restart: always
@@ -54,8 +54,8 @@ services:
   cards:
     image: greatness/cards:latest
     mem_limit: 700m
-    expose:
-      - 8082
+    ports:
+      - '8082:8082'
     depends_on:
       - configserver
     #restart: always
