@@ -35,5 +35,13 @@
     -> 3. Devops:
         Devops is an approach to culture, automation, and platform design intended to deliver increased business value and responsiveness.
 
-    -> 4. Continous Delivery:
+    -> 4. Continuous Delivery:
         It's a software development practice in which the process of delivering software is automated to allow short-term deliveries into a production environment.
+
+==> Challenge 4 with Microservices: Service Discovery  & Registration
+    => How do services locate each other inside a network?
+        -> each instance of a microservice exposes a remote API with its own host and port. How do other microservices & clients know about these dynamic endpoint URLs to invoke them.
+            So where is my services.
+    => How do new service instances enter into the network?
+        -> If a microservice instance fails, new instances will be brought online to ensure constant availability. This means that the IP addresses of the instances can start serving to the clients?
+    => Load Balance, Info Sharing b/w the multiple microservice instances especially a microservice is invoking another microservice? How do a specific service information shared across the network.
