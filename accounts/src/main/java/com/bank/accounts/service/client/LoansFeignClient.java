@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Stephane Nganou
  */
-@FeignClient("loans")
+@FeignClient("loans") // "The String 'loans' represents the application I want to make the HTTP requests"
 public interface LoansFeignClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/loans/", consumes = "application/json")

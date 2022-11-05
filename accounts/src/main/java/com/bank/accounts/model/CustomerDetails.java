@@ -1,7 +1,5 @@
 package com.bank.accounts.model;
 
-import lombok.Data;
-
 import java.util.List;
 import java.util.Objects;
 

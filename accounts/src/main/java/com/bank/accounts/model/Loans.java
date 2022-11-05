@@ -1,7 +1,5 @@
 package com.bank.accounts.model;
 
-import lombok.Data;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
