@@ -11,11 +11,11 @@ services:
     expose:
       - 8084
 
-  accounts:
-    image: greatness/accounts:latest
+  eurekaserver:
+    image: greatness/eurekaserver:latest
     mem_limit: 700m
     expose:
-      - 8083
+      - 8085
     depends_on:
       - configserver
     #restart: always
@@ -28,8 +28,30 @@ services:
     networks:
       - greatness
     environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+
+  accounts:
+    image: greatness/accounts:latest
+    mem_limit: 700m
+    expose:
+      - 8083
+    depends_on:
+      - configserver
+      - eurekaserver
+    #restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - greatness
+    environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
 
   loans:
     image: greatness/loans:latest
@@ -38,6 +60,7 @@ services:
       - 8081
     depends_on:
       - configserver
+      - eurekaserver
     #restart: always
     deploy:
       restart_policy:
@@ -50,6 +73,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
 
   cards:
     image: greatness/cards:latest
@@ -58,6 +82,7 @@ services:
       - 8082
     depends_on:
       - configserver
+      - eurekaserver
     #restart: always
     deploy:
       restart_policy:
@@ -70,6 +95,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
 
 networks:
   greatness:
