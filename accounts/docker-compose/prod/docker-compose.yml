@@ -5,11 +5,17 @@ services:
   configserver:
     image: greatness/configserver:latest
     mem_limit: 700m
-    restart: always
+    #restart: always
     networks:
       - greatness
     ports:
       - "8084:8084"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 8s
+        max_attempts: 3
+        window: 120s
 
   eurekaserver:
     image: greatness/eurekaserver:latest
@@ -22,7 +28,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 20s
         max_attempts: 3
         window: 120s
     networks:
@@ -43,7 +49,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 20s
         max_attempts: 3
         window: 120s
     networks:
@@ -65,7 +71,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 20s
         max_attempts: 3
         window: 120s
     networks:
@@ -87,7 +93,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 20s
         max_attempts: 3
         window: 120s
     networks:
