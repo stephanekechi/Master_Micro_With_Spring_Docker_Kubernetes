@@ -49,3 +49,14 @@
 ==> Challenge 5 with MicroServices: Handling residencies:
     => Circuit Breaker Pattern:
         different states: #Open, #Closed, #Half-Closed
+    => Retry Pattern
+        with it, it's possible to configure:
+        # maxAttempts - the maximum number of attempts.
+        # waitDuration - A fixed wait duration between retry attempts.
+        # retryExceptions - Configures a list of Throwable classes that are recorded as a failure and thus are retried.
+        # IgnoreExceptions - Configures a list of Throwable classes that are ignored and thus are not retried.
+    => Rate Limiter Pattern
+        with it, we can configure the following values:
+        # timeoutDuration - the default wait time a threat waits for a permission
+        # limitForPeriod - the number of permissions available during one limit refresh period.
+        # limitRefreshPeriod - the period of a limit refresh. After each period the rate limiter sets its permission count back to the limitForPeriod value.
