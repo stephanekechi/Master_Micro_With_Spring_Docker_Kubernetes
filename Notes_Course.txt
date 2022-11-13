@@ -45,3 +45,7 @@
     => How do new service instances enter into the network?
         -> If a microservice instance fails, new instances will be brought online to ensure constant availability. This means that the IP addresses of the instances can start serving to the clients?
     => Load Balance, Info Sharing b/w the multiple microservice instances especially a microservice is invoking another microservice? How do a specific service information shared across the network.
+
+==> Challenge 5 with MicroServices: Handling residencies:
+    => Circuit Breaker Pattern:
+        different states: #Open, #Closed, #Half-Closed

@@ -68,7 +68,7 @@ public class AccountsController {
         return objectWriter.writeValueAsString(properties);
     }
 
-    @PostMapping("myCustomerDetails")
+    @PostMapping("/myCustomerDetails")
     public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
 
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
