@@ -27,7 +27,7 @@
  ==> Principles of Cloud-Native Applications
 
     -> 1. Microservice:
-        A micro-services architecture breaks apps downs into their smallest components, independent from each other.
+        A Micro-Services architecture breaks apps downs into their smallest components, independent from each other.
 
     -> 2. Containers:
         Containers allow apps to be packaged and isolated with their entire runtime environment, making iT easy to move them between environments while retaining full functionality.
@@ -60,3 +60,8 @@
         # timeoutDuration - the default wait time a threat waits for a permission
         # limitForPeriod - the number of permissions available during one limit refresh period.
         # limitRefreshPeriod - the period of a limit refresh. After each period the rate limiter sets its permission count back to the limitForPeriod value.
+        ## We can also define a fallback mechanism if the service call fails due to rate limiter configurations
+    => Bulkhead Pattern
+        with it, we can configure the following values:
+        # maxConcurrentCalls - Max amount of parallel executions
+        # maxWaitDuration - Max amount of time a thread should be blocked for when attempting to enter a saturated bulkhead.
