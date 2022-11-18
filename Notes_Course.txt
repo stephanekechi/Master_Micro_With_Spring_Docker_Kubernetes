@@ -65,3 +65,8 @@
         with it, we can configure the following values:
         # maxConcurrentCalls - Max amount of parallel executions
         # maxWaitDuration - Max amount of time a thread should be blocked for when attempting to enter a saturated bulkhead.
+
+    Challenge 6 with MicroServices: Routing, Cross cutting concerns
+    => Spring Cloud Gateway is a library for building an API gateway. It is intended to sit between a requester and a resource that's being requested, where it
+        intercepts, analyses, and modifies every request. That means you can route requests based on their context. Did a request include a header indicating an API version?
+        We can route that request to the appropriately versioned backend. Does the request require sticky sessions? The Gateway can keep track of each user's session.
