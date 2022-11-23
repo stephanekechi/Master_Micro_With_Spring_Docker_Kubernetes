@@ -13,7 +13,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 8s
+        delay: 5s
         max_attempts: 3
         window: 120s
 
@@ -28,7 +28,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 20s
+        delay: 11s
         max_attempts: 3
         window: 120s
     networks:
@@ -36,6 +36,27 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+
+  gatewayserver:
+    image: greatness/gatewayserver:latest
+    mem_limit: 700m
+    ports:
+      - "8086:8086"
+    depends_on:
+      - configserver
+    #restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 11s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - greatness
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
 
   accounts:
     image: greatness/accounts:latest
@@ -45,11 +66,12 @@ services:
     depends_on:
       - configserver
       - eurekaserver
+      - gatewayserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 30s
+        delay: 20s
         max_attempts: 3
         window: 120s
     networks:
@@ -67,11 +89,12 @@ services:
     depends_on:
       - configserver
       - eurekaserver
+      - gatewayserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 30s
+        delay: 20s
         max_attempts: 3
         window: 120s
     networks:
@@ -89,11 +112,12 @@ services:
     depends_on:
       - configserver
       - eurekaserver
+      - gatewayserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 30s
+        delay: 20s
         max_attempts: 3
         window: 120s
     networks:
