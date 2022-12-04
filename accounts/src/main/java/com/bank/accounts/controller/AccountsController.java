@@ -13,6 +13,7 @@ import com.bank.accounts.service.client.LoansFeignClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,22 +73,18 @@ public class AccountsController {
     public Accounts getAccountsDetails(@RequestBody Customer customer) {
 
         log.info("Requesting account '/' with: {}", customer);
-        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
 
-        if (null != accounts) {
-            return accounts;
-        }
-        return null;
+        return accountsRepository.findByCustomerId(customer.getCustomerId());
     }
 
     @PostMapping("/myCustomerDetails")
-    //@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallback")
+    @CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallback")
     @Retry(name = "retryForCustomerDetails")
-    public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
+    public CustomerDetails myCustomerDetails(@RequestHeader("greatnessbank-correlation-id") String correlationId, @RequestBody Customer customer) {
 
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
-        List<Loans> loans = loansFeignClient.getLoansDetails(customer);
-        List<Cards> cards = cardsFeignClient.getCardsDetails(customer);
+        List<Loans> loans = loansFeignClient.getLoansDetails(correlationId, customer);
+        List<Cards> cards = cardsFeignClient.getCardsDetails(correlationId, customer);
 
         return new CustomerDetails(accounts, loans, cards);
     }

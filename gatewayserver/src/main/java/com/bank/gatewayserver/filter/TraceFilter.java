@@ -16,8 +16,12 @@ import reactor.core.publisher.Mono;
 @Component
 public class TraceFilter implements GlobalFilter {
 
+    private final FilterUtility filterUtility;
+
     @Autowired
-    private FilterUtility filterUtility;
+    public TraceFilter(FilterUtility filterUtility) {
+        this.filterUtility = filterUtility;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

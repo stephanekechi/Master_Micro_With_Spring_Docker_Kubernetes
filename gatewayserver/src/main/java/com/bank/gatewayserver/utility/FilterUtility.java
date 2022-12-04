@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class FilterUtility {
 
-    private static final String CORRELATION_ID = "greatnessbank-correlation-id";
+    public static final String CORRELATION_ID = "greatnessbank-correlation-id";
 
     public String getCorrelationId(HttpHeaders requestHeaders) {
         if (requestHeaders.get(CORRELATION_ID) != null) {

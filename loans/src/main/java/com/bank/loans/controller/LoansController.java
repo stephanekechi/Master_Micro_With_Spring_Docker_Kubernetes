@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,7 +46,7 @@ public class LoansController {
     }
 
     @PostMapping("/")
-    public List<Loans> getAccountDetails(@RequestBody Customer customer) {
+    public List<Loans> getAccountDetails(@RequestHeader("greatnessbank-correlation-id") String correlationId, @RequestBody Customer customer) {
 
         return loansRepository.findByCustomerIdOrderByCreateDateDesc(customer.getCustomerId());
     }
