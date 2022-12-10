@@ -61,8 +61,9 @@ public class AccountsController {
 
     @GetMapping("/properties")
     public String getPropertyDetails() throws JsonProcessingException {
-        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        log.info("Requesting properties '/properties'");
 
+        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
         Properties properties = new Properties(accountsServiceConfig.getMsg(), accountsServiceConfig.getBuildVersion(),
                 accountsServiceConfig.getMailDetails(), accountsServiceConfig.getActiveBranches());
 
@@ -71,7 +72,6 @@ public class AccountsController {
 
     @PostMapping("/")
     public Accounts getAccountsDetails(@RequestBody Customer customer) {
-
         log.info("Requesting account '/' with: {}", customer);
 
         return accountsRepository.findByCustomerId(customer.getCustomerId());
@@ -82,6 +82,7 @@ public class AccountsController {
     @Retry(name = "retryForCustomerDetails")
     public CustomerDetails myCustomerDetails(@RequestHeader("greatnessbank-correlation-id") String correlationId, @RequestBody Customer customer) {
 
+        log.info("Requesting CustomerDetails '/myCustomerDetails' with: {}", customer);
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
         List<Loans> loans = loansFeignClient.getLoansDetails(correlationId, customer);
         List<Cards> cards = cardsFeignClient.getCardsDetails(correlationId, customer);

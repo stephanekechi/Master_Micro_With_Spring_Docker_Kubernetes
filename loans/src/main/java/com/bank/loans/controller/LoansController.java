@@ -8,6 +8,7 @@ import com.bank.loans.repository.LoansRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/loans")
+@Slf4j
 public class LoansController {
 
     private final LoansRepository loansRepository;
@@ -38,6 +40,8 @@ public class LoansController {
 
     @GetMapping("/properties")
     public String getPropertiesDetails() throws JsonProcessingException {
+        log.info("Requesting properties '/properties'");
+
         ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
         Properties properties = new Properties(loansServiceConfig.getMsg(), loansServiceConfig.getBuildVersion(),
                 loansServiceConfig.getMailDetails(), loansServiceConfig.getActiveBranches());
@@ -47,6 +51,7 @@ public class LoansController {
 
     @PostMapping("/")
     public List<Loans> getAccountDetails(@RequestHeader("greatnessbank-correlation-id") String correlationId, @RequestBody Customer customer) {
+        log.info("Requesting Loans '/' with: {}", customer);
 
         return loansRepository.findByCustomerIdOrderByCreateDateDesc(customer.getCustomerId());
     }
