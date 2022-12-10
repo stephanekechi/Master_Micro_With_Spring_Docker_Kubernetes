@@ -70,3 +70,31 @@
     => Spring Cloud Gateway is a library for building an API gateway. It is intended to sit between a requester and a resource that's being requested, where it
         intercepts, analyses, and modifies every request. That means you can route requests based on their context. Did a request include a header indicating an API version?
         We can route that request to the appropriately versioned backend. Does the request require sticky sessions? The Gateway can keep track of each user's session.
+
+   Challenge 7 with MicroServices: Distributed Tracing & Log Aggregation
+   => How do we debug where problems are in MicroServices:
+        # How do we trace one or more transactions across multiple services?
+            Physical machines? and different data stores? and try to find where exactly the problem or bug is?
+   => How do we aggregate all application logs?
+        # How do we combine all the logs from multiple services into a central location where they can be indexed?, searched?
+            and grouped to find bugs that are contributing to a problem?
+   => How do we monitor our chain of service calls?
+        # How do we understand for a specific chain service call the path it travelled inside our microservices network,
+            time it took at each MicroServices etc. ?
+        # Spring Cloud Sleuth:
+            -> Spring Cloud Sleuth provides Spring Boot auto-configuration for distributed tracing.
+            -> It adds trace and span ids to all the logs, so u can just extract from a given trace or span in a log aggregator.
+            -> It does this by adding the filters and interacting with other Spring Components to let the correlation IDs
+                being generated pass through to all the system calls.
+            # Spring Cloud Sleuth will add 3 pieces of information to all logs written by a MicroService:
+                <App Name>, <Trace ID>, <span ID>
+            # Application name of the service: this is going to be the application name where the log entry is being made. Spring cloud sleuth get this name
+                from the 'spring.application.name' property.
+            # Trace ID: is the equivalent term for correlation ID. It's a unique number that represents an entire transaction.
+            # Span ID: a span ID is a unique key that represents part of the overall transaction. Each service participating within the transaction will have
+                its own span ID. Span IDs are in particular relevant when you integrate with Zipkin to visualize ur Transactions.
+        # Zipkin:
+            -> it is an open-source data-visualization tool that can help to aggregate all the logs and gather timing data needed to troubleshoot
+                latency issues in microservices architectures.
+            -> it allows us to break a transaction down into its components pieces and visually identify where there might be performance hotspots.
+                Thus reducing time in triaging by contextualizing errors and delays. Jet
