@@ -2,23 +2,20 @@ package com.bank.gatewayserver.filter;
 
 import com.bank.gatewayserver.utility.FilterUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-@Order(1) // prescribe the order of filters.
+//@Order(1) // prescribe the order of filters.
 @Slf4j
-@Component
+//@Component
 public class TraceFilter implements GlobalFilter {
 
     private final FilterUtility filterUtility;
 
-    @Autowired
+    //@Autowired
     public TraceFilter(FilterUtility filterUtility) {
         this.filterUtility = filterUtility;
     }
