@@ -47,7 +47,7 @@ public class CardsController {
     }
 
     @PostMapping("/")
-    public List<Cards> getCards(@RequestHeader("greatnessbank-correlation-id") String correlationId, @RequestBody Customer customer) {
+    public List<Cards> getCards(/*@RequestHeader("greatnessbank-correlation-id") String correlationId, */@RequestBody Customer customer) {
         log.info("Requesting Cards '/' with: {}", customer);
 
         return cardsRepository.findByCustomerId(customer.getCustomerId());

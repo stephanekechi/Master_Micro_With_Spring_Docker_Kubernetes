@@ -80,12 +80,12 @@ public class AccountsController {
     @PostMapping("/myCustomerDetails")
     @CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallback")
     @Retry(name = "retryForCustomerDetails")
-    public CustomerDetails myCustomerDetails(@RequestHeader("greatnessbank-correlation-id") String correlationId, @RequestBody Customer customer) {
+    public CustomerDetails myCustomerDetails(/*@RequestHeader("greatnessbank-correlation-id") String correlationId, */@RequestBody Customer customer) {
 
         log.info("Requesting CustomerDetails '/myCustomerDetails' with: {}", customer);
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
-        List<Loans> loans = loansFeignClient.getLoansDetails(correlationId, customer);
-        List<Cards> cards = cardsFeignClient.getCardsDetails(correlationId, customer);
+        List<Loans> loans = loansFeignClient.getLoansDetails(/*correlationId, */customer);
+        List<Cards> cards = cardsFeignClient.getCardsDetails(/*correlationId, */customer);
 
         return new CustomerDetails(accounts, loans, cards);
     }
