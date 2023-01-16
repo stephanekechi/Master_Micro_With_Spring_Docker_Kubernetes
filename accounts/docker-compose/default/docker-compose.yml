@@ -1,6 +1,20 @@
 version: "3.9"
 
 services:
+  zipkinserver:
+    image: openzipkin/zipkin:latest
+    #mem_limit: 700m
+    #restart: always
+    networks:
+      - greatness
+    ports:
+      - "9411:9411"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
 
   configserver:
     image: greatness/configserver:latest
@@ -10,12 +24,17 @@ services:
       - greatness
     ports:
       - "8084:8084"
+    depends_on:
+      - zipkinserver
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 11s
         max_attempts: 3
         window: 120s
+    environment:
+      SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
+      SPRING_ZIPKIN_BASEURL: http://zipkinserver:9411/
 
   eurekaserver:
     image: greatness/eurekaserver:latest
@@ -24,11 +43,12 @@ services:
       - "8085:8085"
     depends_on:
       - configserver
+      - zipkinserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 11s
+        delay: 15s
         max_attempts: 3
         window: 120s
     networks:
@@ -36,6 +56,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
+      SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
+      SPRING_ZIPKIN_BASEURL: http://zipkinserver:9411/
 
   gatewayserver:
     image: greatness/gatewayserver:latest
@@ -44,11 +66,12 @@ services:
       - "8086:8086"
     depends_on:
       - configserver
+      - zipkinserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 11s
+        delay: 15s
         max_attempts: 3
         window: 120s
     networks:
@@ -57,6 +80,8 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
+      SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
+      SPRING_ZIPKIN_BASEURL: http://zipkinserver:9411/
 
   accounts:
     image: greatness/accounts:latest
@@ -67,11 +92,12 @@ services:
       - configserver
       - eurekaserver
       - gatewayserver
+      - zipkinserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 20s
+        delay: 23s
         max_attempts: 3
         window: 120s
     networks:
@@ -80,6 +106,8 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
+      SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
+      SPRING_ZIPKIN_BASEURL: http://zipkinserver:9411/
 
   loans:
     image: greatness/loans:latest
@@ -90,11 +118,12 @@ services:
       - configserver
       - eurekaserver
       - gatewayserver
+      - zipkinserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 20s
+        delay: 23s
         max_attempts: 3
         window: 120s
     networks:
@@ -103,6 +132,8 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
+      SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
+      SPRING_ZIPKIN_BASEURL: http://zipkinserver:9411/
 
   cards:
     image: greatness/cards:latest
@@ -113,11 +144,12 @@ services:
       - configserver
       - eurekaserver
       - gatewayserver
+      - zipkinserver
     #restart: always
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 20s
+        delay: 23s
         max_attempts: 3
         window: 120s
     networks:
@@ -126,6 +158,8 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8084/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8085/eureka/
+      SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
+      SPRING_ZIPKIN_BASEURL: http://zipkinserver:9411/
 
 networks:
   greatness:
