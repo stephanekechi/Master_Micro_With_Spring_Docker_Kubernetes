@@ -3,12 +3,39 @@ version: "3.9"
 services:
   prometheusserver:
     image: prom/prometheus:latest
+    restart: always
     ports:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - greatness
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  grafanaserver:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: password
+    networks:
+      - greatness
+    depends_on:
+      - prometheusserver
+    restart: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
 
   rabbitMQserver:
     image: rabbitmq:3-management
