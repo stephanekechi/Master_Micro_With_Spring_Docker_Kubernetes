@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,6 +78,7 @@ public class AccountsController {
     }
 
     @PostMapping("/myCustomerDetails")
+    @Timed(value = "myCustomerDetails.time", description = "Time taken to return Customer Details")
     @CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallback")
     @Retry(name = "retryForCustomerDetails")
     public CustomerDetails myCustomerDetails(/*@RequestHeader("greatnessbank-correlation-id") String correlationId, */@RequestBody Customer customer) {

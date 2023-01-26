@@ -1,6 +1,15 @@
 version: "3.9"
 
 services:
+  prometheusserver:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - greatness
+
   rabbitMQserver:
     image: rabbitmq:3-management
     #mem_limit: 700m
@@ -42,6 +51,7 @@ services:
       - "8084:8084"
     depends_on:
       - zipkinserver
+      - rabbitMQserver
     deploy:
       restart_policy:
         condition: on-failure
